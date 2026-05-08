@@ -1,44 +1,52 @@
-# Project Blueprint: Lotto Recommendation Site
+# Blueprint: 럭키 로또 번호 생성기
 
-## Overview
-A modern, web-based Lotto Recommendation application designed to provide users with a visually engaging way to generate potential winning lottery numbers. The application focuses on a premium user experience with interactive animations, vibrant colors, and a clean, responsive interface.
+## 개요
 
-## Project Details & Features
+이 프로젝트는 사용자를 위한 현대적이고 시각적으로 매력적인 로또 번호 생성기를 만드는 것을 목표로 합니다. 사용자는 버튼 클릭 한 번으로 무작위 번호 조합을 생성하고, 이전 생성 기록을 확인할 수 있습니다. 이 애플리케이션은 최신 웹 표준(HTML, CSS, JS)을 사용하여 프레임워크 없이 구축됩니다.
 
-### Visual Design
-- **Typography**: Expressive sans-serif fonts for a modern feel.
-- **Colors**: Utilizing `oklch` for vibrant colors corresponding to traditional lotto ball categories (1-10: Yellow, 11-20: Blue, 21-30: Red, 31-40: Grey, 41-45: Green).
-- **Layout**: Centered, card-based layout with subtle noise textures and deep shadows to create depth.
-- **Interactivity**: Smooth transitions and "glow" effects on buttons and interactive elements.
-- **Responsiveness**: Mobile-first design using container queries and flexible grids.
+## 디자인 및 기능
 
-### Features
-- **Random Number Generation**: Generates 6 unique numbers between 1 and 45.
-- **Visual Balls**: Each number is displayed inside a stylized ball with its respective category color.
-- **Interactive Animation**: A "Generating..." state with animations before revealing the numbers.
-- **History/Save (Future)**: Ability to keep track of generated numbers in the current session.
+### 1. 시각적 디자인 (구현 완료)
 
-## Implementation Plan
+- **테마**: '행운'과 '기회'를 강조하는 재미있고 활기찬 테마.
+- **색상 팔레트**: 시각적 계층과 명확성을 위해 생생한 그라데이션과 부드러운 그림자를 사용합니다.
+- **타이포그래피**: 가독성이 뛰어난 현대적인 산세리프 글꼴('Pretendard')을 사용합니다.
+- **레이아웃**: 중앙에 카드 기반 레이아웃을 사용하여 번호 생성기에 집중할 수 있도록 합니다. 모바일 반응형으로 설계되었습니다.
+- **아이콘 및 효과**: 미묘한 그림자, 그라데이션, 그리고 인터랙티브한 요소에 대한 호버 효과를 포함하여 사용자 경험을 향상시킵니다.
 
-### Step 1: HTML Structure (`index.html`)
-- Define the main container for the lotto generator.
-- Create a placeholder for the generated balls.
-- Add a "Generate Numbers" button with appropriate styling hooks.
+### 2. 핵심 기능 (구현 예정)
 
-### Step 2: Modern CSS Styling (`style.css`)
-- Use CSS Variables for the color palette.
-- Implement `@layer` for organized styling.
-- Use `oklch()` for perceptually uniform and vibrant colors.
-- Add multi-layered shadows and subtle background textures.
-- Ensure responsiveness with media queries and container queries.
+- **번호 생성**:
+    - "번호 생성하기" 버튼을 클릭하면 1부터 45까지의 숫자 중에서 겹치지 않는 6개의 숫자를 무작위로 선택합니다.
+    - 생성된 숫자는 시각적으로 구분된 공 모양 요소에 표시됩니다.
+    - 숫자 값에 따라 공의 색상이 달라져 시각적 구분을 돕습니다.
 
-### Step 3: JavaScript Logic (`main.js`)
-- Implement the number generation algorithm (ensuring no duplicates).
-- Sort the generated numbers.
-- Create a function to map numbers to their respective ball colors.
-- Handle DOM manipulation to animate the "reveal" of the numbers.
+- **최근 생성 번호 기록**:
+    - 생성된 번호 조합은 "최근 생성 번호" 목록에 추가됩니다.
+    - 각 기록 항목은 생성된 시간과 번호 조합을 표시합니다.
+    - 이 기록은 브라우저의 `localStorage`에 저장되어 사용자가 페이지를 새로고침해도 유지됩니다.
 
-### Step 4: Refinement & Validation
-- Check for accessibility (ARIA labels, contrast).
-- Verify mobile responsiveness.
-- Monitor console for any errors.
+- **애니메이션 및 효과**:
+    - 번호가 생성될 때 부드러운 애니메이션 효과를 적용하여 사용자 경험을 향상시킵니다.
+    - 버튼 클릭과 같은 상호작용에 시각적 피드백을 제공합니다.
+
+## 기술 스택
+
+- **HTML**: 웹 구성 요소를 사용한 시맨틱 마크업.
+- **CSS**: 현대적인 CSS 기능 (CSS 변수, Flexbox, Grid).
+- **JavaScript**:
+    - DOM 조작.
+    - 이벤트 리스너.
+    - `Math.random()`을 사용한 무작위 번호 생성.
+    - `localStorage`를 사용한 클라이언트 측 저장.
+    - ES 모듈.
+
+## 현재 구현 계획
+
+1.  **`main.js` 파일 작성**:
+    -   DOM 요소 (버튼, 공 컨테이너, 기록 목록)에 대한 참조를 가져옵니다.
+    -   "번호 생성하기" 버튼에 클릭 이벤트 리스너를 추가합니다.
+    -   클릭 시 6개의 고유한 무작위 번호를 생성하는 함수를 구현합니다.
+    -   생성된 번호를 화면의 공 요소에 동적으로 렌더링하는 함수를 구현합니다.
+    -   생성된 번호 조합을 기록 목록에 추가하고 `localStorage`에 저장하는 기능을 구현합니다.
+    -   페이지 로드 시 `localStorage`에서 기록을 불러오는 기능을 구현합니다.
