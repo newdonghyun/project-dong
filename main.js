@@ -1,13 +1,42 @@
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 로또 관련 요소
     const lottoBallsContainer = document.getElementById('lotto-balls');
     const generateBtn = document.getElementById('generate-btn');
     const historyList = document.getElementById('history-list');
 
-    const HISTORY_KEY = 'lottoHistory';
+    // 테마 관련 요소
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
 
-    // 로컬 스토리지에서 기록 불러오기
+    const HISTORY_KEY = 'lottoHistory';
+    const THEME_KEY = 'theme';
+
+    // 아이콘 SVG
+    const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+    const sunIcon = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+
+    // 로컬 스토리지에서 기록 및 테마 불러오기
     let history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+    let currentTheme = localStorage.getItem(THEME_KEY);
+
+    // 테마 적용 함수
+    const applyTheme = (theme) => {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.innerHTML = sunIcon;
+        } else {
+            document.body.classList.remove('dark-mode');
+            themeIcon.innerHTML = moonIcon;
+        }
+    };
+
+    // 테마 전환 함수
+    const toggleTheme = () => {
+        const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+        localStorage.setItem(THEME_KEY, newTheme);
+        applyTheme(newTheme);
+    };
 
     // 공 색상 지정을 위한 함수
     const getColor = (number) => {
@@ -38,14 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
             lottoBallsContainer.appendChild(ball);
         });
 
-        // 기록에 추가
         addToHistory(sortedNumbers);
     };
 
     // 기록에 추가하고 화면 업데이트
     const addToHistory = (numbers) => {
         const newHistoryItem = {
-            time: new Date().toLocaleString(),
+            time: new Date().toISOString(),
             numbers: numbers,
         };
 
@@ -81,7 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 이벤트 리스너 설정
     generateBtn.addEventListener('click', generateLottoNumbers);
+    themeToggleBtn.addEventListener('click', toggleTheme);
 
-    // 초기 기록 렌더링
+    // 초기 렌더링
+    applyTheme(currentTheme);
     renderHistory();
 });
